@@ -1,0 +1,6 @@
+fastapi[all]
+langchain
+langchain_openai
+pydantic_settings
+aioboto3
+httpx
