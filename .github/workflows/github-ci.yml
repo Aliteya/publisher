@@ -20,8 +20,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.ECS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -29,11 +29,11 @@ jobs:
 
       - name: Build and push image to ECR
         env:
-  
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: demo-publisher
+          ECR_REPOSITORY_URL: ${{ secrets.ECR_URL }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./app
-  
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "Building image..."
+          docker build -t $ECR_REPOSITORY_URL:$IMAGE_TAG ./app
+          
+          echo "Pushing image..."
+          docker push $ECR_REPOSITORY_URL:$IMAGE_TAG
