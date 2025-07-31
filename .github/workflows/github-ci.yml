@@ -39,6 +39,3 @@ jobs:
           echo "Pushing image..."
           docker push $ECR_REPOSITORY_URL:$IMAGE_TAG
     
-      - name: update container
-        run: |
-          aws ecs update-service --cluster demo-cluster --service publisher --force-new-deployment
