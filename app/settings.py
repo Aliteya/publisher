@@ -10,8 +10,8 @@ class PublisherSettings(BaseSettings):
     AWS_REGION: str
     SQS_QUEUE_URL: str
     SERVICE_2_URL: str
-    AWS_ACCESS_KEY_ID: str
-    AWS_SECRET_ACCESS_KEY: str
+    # AWS_ACCESS_KEY_ID: str
+    # AWS_SECRET_ACCESS_KEY: str
     llm: Optional[ChatOpenAI] = None
 
     model_config = SettingsConfigDict(env_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "./../.env"), extra="ignore")
@@ -34,10 +34,10 @@ class PublisherSettings(BaseSettings):
     def get_service2_url(self) -> str:
         return self.SERVICE_2_URL
     
-    def get_access_key_id(self):
-        return self.AWS_ACCESS_KEY_ID
+    # def get_access_key_id(self):
+    #     return self.AWS_ACCESS_KEY_ID
     
-    def get_access_secret_key(self):
-        return self.AWS_SECRET_ACCESS_KEY
+    # def get_access_secret_key(self):
+    #     return self.AWS_SECRET_ACCESS_KEY
 
 settings = PublisherSettings()

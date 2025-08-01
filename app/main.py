@@ -49,9 +49,9 @@ async def send(user_input: UserInput):
         raise HTTPException(status_code=400, detail="Input is not valid.")
     async with session.client(
         "sqs",
-        region_name=settings.get_aws_region(),
-        aws_access_key_id=settings.get_access_key_id(),
-        aws_secret_access_key=settings.get_access_secret_key()
+        region_name=settings.get_aws_region()
+        # aws_access_key_id=settings.get_access_key_id(),
+        # aws_secret_access_key=settings.get_access_secret_key()
     ) as sqs_client:
         try:
             logger.debug("start sending to queque")
