@@ -73,16 +73,7 @@ async def send(user_input: UserInput):
         except Exception as e:
             logger.error(f"Failed to send message to SQS: {e}")
             raise HTTPException(status_code=500, detail="Failed to send message to queue.")
-    # try:
-        # timeout = httpx.Timeout(60.0) 
-        # async with httpx.AsyncClient(timeout=timeout) as client:
-        #     response_from_service2 = await client.post(settings.get_service2_url(), json=user_input.model_dump())
-        #     response_from_service2.raise_for_status()
-        #     logger.debug(f"letter wrote. Inside: {response_from_service2}")
-        #     return JSONResponse(
-        #             status_code=202, 
-        #             content=response_from_service2.json()
-        #         )
-    # except Exception as e:
-    #     logger.error(f"Message was sent to SQS, but failed to call Service 2: {e}")
-    #     raise HTTPException(status_code=503, detail="Service 2 is unavailable.")
+   
+@publisher_app.get("/health")
+async def healthcheck():
+    return JSONResponse(status_code=200)
