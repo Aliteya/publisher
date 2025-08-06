@@ -3,6 +3,7 @@ import httpx
 from .settings import settings
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware 
 from fastapi.responses import RedirectResponse, JSONResponse
 
 from langchain_openai import ChatOpenAI
@@ -35,6 +36,18 @@ async def lifespan(app: FastAPI):
     yield
 
 publisher_app = FastAPI(lifespan=lifespan)
+origins = [
+    "*"
+]
+
+publisher_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @publisher_app.get("/")
 async def root():
