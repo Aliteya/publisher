@@ -89,4 +89,4 @@ async def send(user_input: UserInput):
    
 @publisher_app.get("/health")
 async def healthcheck():
-    return JSONResponse(status_code=200)
+    return JSONResponse(status_code=200, content={"status": "ok"})
