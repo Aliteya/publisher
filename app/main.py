@@ -33,6 +33,7 @@ def get_llm_client():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     get_llm_client()
+    logger.warning(f"ENVIRONMENTS: {settings.get_aws_region(), settings.get_sqs_url(), settings.get_service2_url(), settings.get_llm_name()}")
     yield
 
 publisher_app = FastAPI(lifespan=lifespan)
