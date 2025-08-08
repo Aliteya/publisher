@@ -70,11 +70,13 @@ async def send(user_input: UserInput):
         try:
             logger.debug("start sending to queque")
             message_body = user_input.model_dump_json()
+            logger.warning(f"IM HERE ${settings.get_sqs_url()}")
             await sqs_client.send_message(
                 QueueUrl=settings.get_sqs_url(),
                 MessageBody=message_body
             )
             logger.debug("end sending to queque")
+            logger.debug(f"Calling service 2 at {settings.get_service2_url()}")
             timeout = httpx.Timeout(60.0) 
             async with httpx.AsyncClient(timeout=timeout) as client:
                 response_from_service2 = await client.post(settings.get_service2_url(), json=user_input.model_dump())
